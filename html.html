@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>2 Burndown Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {margin:0; background:#f4f6f9; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; gap:20px; padding:20px; box-sizing:border-box;}
+    .charts {display:flex; gap:30px; flex-wrap:wrap; justify-content:center;}
+    canvas {background:white; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.1);}
+    h3 {margin:10px 0 5px; color:#2c3e50;}
+  </style>
+</head>
+<body>
+
+  <h3>Burndown Chart – Sprint Mobile App (100 points – 10 ngày làm việc)</h3>
+
+  <div class="charts">
+    <!-- Biểu đồ 1: Tình huống TỐT -->
+    <div>
+      <h3>Đang on-track</h3>
+      <canvas id="good" width="480" height="340"></canvas>
+    </div>
+
+    <!-- Biểu đồ 2: Tình huống XẤU -->
+    <div>
+      <h3>Cảnh báo – chậm tiến độ</h3>
+      <canvas id="bad" width="480" height="340"></canvas>
+    </div>
+  </div>
+
+<script>
+  const labels = ["Ngày 0","1","2","3","4","5","6","7","8","9","10"];
+  const ideal = [100,90,80,70,60,50,40,30,20,10,0];
+
+  // TỐT
+  new Chart("good", {type:"line", data:{labels, datasets:[
+    {label:"Lý tưởng", data:ideal, borderColor:"#95a5a6", borderDash:[6,6], pointRadius:4},
+    {label:"Thực tế", data:[100,90,80,70,60,60,50,38,22,10,0], borderColor:"#27ae60", backgroundColor:"#27ae60", tension:0.3, pointRadius:6}
+  ]}, options:{plugins:{title:{display:true, text:"Ngày 5 còn 60 points → Rất tốt"}}, scales:{y:{min:0,max:110,title:{display:true,text:"Story Points còn lại"}}, x:{title:{display:true,text:"Ngày Sprint"}}}}}});
+
+  // XẤU
+  new Chart("bad", {type:"line", data:{labels, datasets:[
+    {label:"Lý tưởng", data:ideal, borderColor:"#95a5a6", borderDash:[6,6], pointRadius:4},
+    {label:"Thực tế", data:[100,98,95,88,80,80,72,62,50,38,25], borderColor:"#e74c3c", backgroundColor:"#e74c3c", tension:0.3, pointRadius:6}
+  ]}, options:{plugins:{title:{display:true, text:"Ngày 5 còn 80 points → Nguy cơ miss goal"}}, scales:{y:{min:0,max:110,title:{display:true,text:"Story Points còn lại"}}, x:{title:{display:true,text:"Ngày Sprint"}}}}}});
+</script>
+
+</body>
+</html>
